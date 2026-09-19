@@ -1,9 +1,20 @@
 import { Hero } from "@/components/site/hero";
+import {
+	ImageBanner,
+	LogoRail,
+	MediaSplit,
+	PhotoMosaic,
+	StatStrip,
+	StepMedia,
+} from "@/components/site/rich-sections";
+import { customers } from "@/data/company";
+import { photos } from "@/data/research";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 export default function Home() {
 	return (
 		<main id="main">
 			<Hero />
+			<LogoRail title="원료와 제품을 함께 만드는 파트너" items={customers.slice(0, 7)} />
 			<section className="section wrap intro" id="discover">
 				<p className="eyebrow">FROM INGREDIENT TO POSSIBILITY</p>
 				<div>
@@ -73,48 +84,79 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="section wrap science-feature">
-				<div className="science-image">
-					<img
-						src="/media/hero.jpg"
-						width="1600"
-						height="900"
-						loading="lazy"
-						alt="유리 용기에 담긴 액체 소재의 브랜드 콘셉트 이미지"
-					/>
-				</div>
-				<div>
-					<p className="eyebrow">MATERIAL SCIENCE</p>
-					<h2>
+			<StatStrip
+				items={[
+					["1988", "삼광실업 창립"],
+					["2015", "기업부설연구소 설립"],
+					["4", "캡슐화·가용화·안정화·정제"],
+					["282", "원료 카탈로그"],
+				]}
+			/>
+			<MediaSplit
+				eyebrow="MATERIAL SCIENCE"
+				title={
+					<>
 						공급하는 원료에서,
 						<br />
 						연구하는 소재로.
-					</h2>
-					<p className="lead">
-						성분을 어떻게 담을지, 제형에 어떻게 적용할지.
-						<br />
-						캡슐화·가용화·안정화·정제 기술로
-						<br />
-						원료 다음의 질문을 이어갑니다.
-					</p>
-					<a className="text-link" href="/technology">
-						삼광켐의 기술 <ArrowUpRight size={20} />
-					</a>
-				</div>
-			</section>
-			<section className="contact-band">
-				<div className="wrap">
-					<p className="eyebrow">LET’S TALK ABOUT YOUR NEXT PRODUCT</p>
-					<h2>
+					</>
+				}
+				body="성분을 어떻게 담을지, 제형에 어떻게 적용할지. 캡슐화·가용화·안정화·정제 기술로 원료 다음의 질문을 이어갑니다."
+				href="/technology"
+				cta="삼광켐의 기술"
+				video
+				videoSrc="/media/clip2.mp4"
+				image="/media/clip2-poster.jpg"
+				alt="시험관에 담긴 오일 소재"
+			/>
+			<StepMedia
+				eyebrow="HOW WE WORK"
+				title={
+					<>
+						원료를 찾고,
+						기술을 보고,
+						다음 제품을 나눕니다.
+					</>
+				}
+				steps={[
+					{
+						index: "01",
+						name: "원료 탐색",
+						body: "분류·제조사·INCI로 필요한 원료를 찾습니다.",
+						image: "/media/technology/gceraplex-pack.jpg",
+						alt: "Gceraplex 제품 용기",
+					},
+					{
+						index: "02",
+						name: "기술 검토",
+						body: "캡슐화·가용화·안정화·정제와 제형 적용을 살펴봅니다.",
+						image: "/media/technology/gceraplex-structure.jpg",
+						alt: "Gceraplex 구조 도해",
+					},
+					{
+						index: "03",
+						name: "개발 상담",
+						body: "샘플·견적·임가공 조건을 담당자와 확인합니다.",
+						image: "/media/research/lab-02.jpg",
+						alt: "연구소 분석 공간",
+					},
+				]}
+			/>
+			<PhotoMosaic photos={photos} />
+			<ImageBanner
+				src="/media/hero.jpg"
+				alt="유리 용기와 액체 소재"
+				eyebrow="NEXT FORMULA"
+				title={
+					<>
 						다음 제품의 질문을,
-						<br />
 						삼광켐과 나눠보세요.
-					</h2>
-					<a className="action light" href="/contact">
-						개발·기술 상담 <ArrowUpRight size={20} />
-					</a>
-				</div>
-			</section>
+					</>
+				}
+				body="원료, 기술자료, 샘플·견적, 초고압유화 임가공."
+				href="/contact"
+				cta="개발·기술 상담"
+			/>
 		</main>
 	);
 }

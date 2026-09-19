@@ -1,3 +1,5 @@
+import { ImageBanner, PhotoMosaic } from "@/components/site/rich-sections";
+import { photos } from "@/data/research";
 export const metadata = { title: "컨텐츠 게시판" };
 
 const contentTypes = [
@@ -8,25 +10,40 @@ const contentTypes = [
 
 export default function Board() {
 	return (
-		<main id="main" className="wrap page-main">
-			<div className="page-heading">
-				<p className="eyebrow">CONTENT BOARD</p>
-				<h1>삼광켐의 이야기와 자료를 한곳에.</h1>
-				<p className="lead">회사 소식부터 원료·제형 기술 인사이트, 제품 자료 업데이트까지 고객의 다음 판단에 도움이 되는 콘텐츠를 전합니다.</p>
+		<main id="main">
+			<ImageBanner
+				src="/media/hero.jpg"
+				alt="유리 용기와 액체 소재"
+				eyebrow="CONTENT BOARD"
+				title="삼광켐의 이야기와 자료를 한곳에."
+				body="회사 소식, 기술 인사이트, 제품 자료 업데이트."
+				href="/contact"
+				cta="자료 문의"
+			/>
+			<div className="wrap page-main">
+				<section className="editorial-section" aria-label="게시판 콘텐츠 영역">
+					{contentTypes.map(([label, title, body], index) => (
+						<article className="tech-row" key={label}>
+							<span className="index">0{index + 1}</span>
+							<div>
+								<p className="eyebrow">{label}</p>
+								<h2>{title}</h2>
+							</div>
+							<p>{body}</p>
+						</article>
+					))}
+				</section>
+				<section className="editorial-section">
+					<p className="eyebrow">NEED MORE INFORMATION?</p>
+					<div>
+						<h2>필요한 자료를 직접 문의해 보세요.</h2>
+						<a className="action" href="/contact">
+							개발·기술 상담
+						</a>
+					</div>
+				</section>
+				<PhotoMosaic photos={photos} />
 			</div>
-			<section className="editorial-section" aria-label="게시판 콘텐츠 영역">
-				{contentTypes.map(([label, title, body], index) => (
-					<article className="tech-row" key={label}>
-						<span className="index">0{index + 1}</span>
-						<div><p className="eyebrow">{label}</p><h2>{title}</h2></div>
-						<p>{body}</p>
-					</article>
-				))}
-			</section>
-			<section className="editorial-section">
-				<p className="eyebrow">NEED MORE INFORMATION?</p>
-				<div><h2>필요한 자료를 직접 문의해 보세요.</h2><a className="action" href="/contact">개발·기술 상담 ↗</a></div>
-			</section>
 		</main>
 	);
 }
