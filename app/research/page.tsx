@@ -1,4 +1,6 @@
+import "../research-enhanced.css";
 import {
+	developmentDirections,
 	milestones,
 	organization,
 	patent,
@@ -6,52 +8,16 @@ import {
 	profile,
 } from "@/data/research";
 import Link from "next/link";
-import { ImageBanner, MediaSplit } from "@/components/site/rich-sections";
+import { TechnologyFrame, TechnologyHero, TechnologyInquiry } from "@/components/site/technology-frame";
 
 export const metadata = { title: "기업부설 연구소" };
 
 export default function Page() {
 	return (
-		<main id="main" className="wrap page-main">
-			<div className="page-heading research-page-heading">
-				<div className="research-heading-meta">
-					<span>01.</span>
-					<span>R&amp;D CENTER · 2015—2026</span>
-				</div>
-				<p className="eyebrow">RESEARCH & DEVELOPMENT</p>
-				<h1>
-					원료의 이름에서,
-					<br />
-					제형의 질문으로.
-				</h1>
-				<p className="lead">
-					성분을 어떤 구조로 담을지, 제형에 어떻게 적용할지.
-					<br />
-					삼광켐 기업부설 연구소는 기능성 소재와 제형을 개발하며 이러한 질문을
-					연구합니다.
-				</p>
-			</div>
-			<MediaSplit
-				eyebrow="LABORATORY"
-				title={
-					<>
-						기능성 소재와 제형을
-						<br />
-						연구하는 자리.
-					</>
-				}
-				body="2015년 설립된 기업부설 연구소에서 캡슐화·가용화·안정화·정제를 다룹니다."
-				href="/technology"
-				cta="연구 기술 살펴보기"
-				video
-				videoSrc="/media/clip3.mp4"
-				image="/media/clip3-poster.jpg"
-				alt="시험관을 배열하는 연구소 작업"
-				reverse
-			/>
-			<nav className="company-nav" aria-label="연구소 소개 바로가기">
+		<TechnologyFrame active="research"><TechnologyHero label="R&D CENTER / 02" title={<>기능성 소재와 제형을<br />연구합니다.</>} description="2015년 설립된 삼광켐 기업부설 연구소. 개발 제품과 특허 출원 기록, 조직과 시설을 소개합니다." image="/media/editorial/lab-editorial.jpg" /><div className="te-body"><nav className="company-nav" aria-label="연구소 소개 바로가기">
 				{[
 					["개요", "profile"],
+					["개발 방향", "direction"],
 					["개발 이력", "history"],
 					["특허", "patent"],
 					["조직", "organization"],
@@ -66,14 +32,13 @@ export default function Page() {
 				<div className="research-editorial-heading">
 					<div>
 						<p className="eyebrow">01 · R&amp;D CENTER</p>
-						<h2>연구를 제품으로.</h2>
+						<h2>연구소 개요</h2>
 					</div>
 					<span className="research-editorial-mark" aria-hidden="true">↗</span>
 				</div>
 				<div>
 					<p className="lead">
-						원료를 관찰하는 데서 멈추지 않고, 제형에 적용되고 제품으로
-						이어지는 조건까지 확인합니다.
+						기능성 소재 및 제형 개발을 주요 사업으로 하는 기업부설 연구소입니다.
 					</p>
 					<p className="research-editorial-note">
 						2015년 설립된 기업부설 연구소에서 기능성 소재와 제형 개발을
@@ -89,18 +54,22 @@ export default function Page() {
 					</dl>
 				</div>
 			</section>
-			<section id="history" className="editorial-section research-editorial">
+			<section id="direction" className="company-section rd-direction">
+ <div className="company-section-heading"><p className="eyebrow">RESEARCH DIRECTION</p><h2>연구가 향하는 방향</h2><p>기능성 소재와 제형 개발을 위한 연구 모델과 개발 방향입니다.</p></div>
+ <div className="rd-model"><p className="rd-model-label">DEVELOPMENT FOCUS</p><h3>기능성소재 및 제형개발</h3><span className="rd-model-bridge">연구모델</span></div>
+ <ol className="rd-pillars">{developmentDirections.map((direction, index) => <li key={direction.title}><span className="rd-index">0{index + 1}</span><h3>{direction.title}</h3><ul>{direction.items.map(item => <li key={item}>{item}</li>)}</ul></li>)}</ol>
+ </section>
+ <section id="history" className="editorial-section research-editorial">
 				<div className="research-editorial-heading">
 					<div>
 						<p className="eyebrow">02 · PRODUCT APPLICATION</p>
-						<h2>제품으로 확인하는 연구.</h2>
+						<h2>개발 제품과 일정</h2>
 					</div>
 					<span className="research-editorial-mark" aria-hidden="true">↗</span>
 				</div>
 				<div>
 					<p className="lead">
-						Gceraplex와 Epidermics. 연구소의 질문이 실제 소재와 제형으로
-						이어진 기록입니다.
+						Gceraplex와 Epidermics의 개발부터 출시까지.
 					</p>
 					<ul className="research-milestones">
 						{milestones.map((item) => (
@@ -137,14 +106,14 @@ export default function Page() {
 				<div className="research-editorial-heading">
 					<div>
 						<p className="eyebrow">03 · INTELLECTUAL PROPERTY</p>
-						<h2>질문을 특허로 남깁니다.</h2>
+						<h2>특허 출원 기록</h2>
 					</div>
 					<span className="research-editorial-mark" aria-hidden="true">↗</span>
 				</div>
 				<div>
 					<p className="lead">
 						연구소 설립 해에 비주얼 캡슐 제조 방법을 특허 출원했습니다.
-						등록 여부가 아닌 출원 사실과 발명의 명칭을 기준으로 소개합니다.
+
 					</p>
 					<dl className="spec-list">
 						<div>
@@ -167,18 +136,12 @@ export default function Page() {
 				<div className="company-section-heading">
 					<p className="eyebrow">LAB ORGANIZATION</p>
 					<h2>연구소 조직</h2>
-					<p>소장과 연구원으로 구성된 연구소 조직입니다.</p>
-				</div>
-				<div className="lab-org" aria-label="연구소 조직도">
-					{organization.map((role, index) => (
-						<div
-							key={role}
-							className={index === 0 ? "lab-org-root" : "lab-org-node"}
-						>
-							{index === 0 ? <strong>{role}</strong> : role}
-						</div>
-					))}
-				</div>
+<p>기술연구소를 중심으로 연결되는 네 가지 연구 분야입니다.</p>
+ </div>
+ <div className="rd-organization" aria-label="기술연구소의 네 가지 병렬 연구 분야">
+ <div className="rd-org-root"><span>R&amp;D CENTER</span><h3>기술연구소</h3></div>
+ <ul className="rd-org-branches">{organization.map((role, index) => <li key={role.title}><span className="rd-index">0{index + 1}</span><h3>{role.title}</h3><p>{role.description}</p></li>)}</ul>
+ </div>
 			</section>
 			<section id="facility" className="company-section">
 				<div className="company-section-heading">
@@ -202,15 +165,6 @@ export default function Page() {
 					))}
 				</ul>
 			</section>
-			<ImageBanner
-				src="/media/technology/epidermics-hydrogel.jpg"
-				alt="Epidermics 다중 안정화 도해"
-				eyebrow="TECHNOLOGY"
-				title="연구를 기술과 제품으로 이어갑니다."
-				body="Gceraplex, Epidermics, Hexanediol-6, MPO(P)."
-				href="/technology"
-				cta="기술 살펴보기"
-			/>
-		</main>
+			</div><TechnologyInquiry /></TechnologyFrame>
 	);
 }

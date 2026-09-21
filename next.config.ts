@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Keep the local review server separate from vinext build caches.
+  distDir: process.env.SAMKWANG_PREVIEW_DIR || ".next",
 };
 
 export default nextConfig;

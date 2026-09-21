@@ -45,3 +45,7 @@ next-env.d.ts
 /.codex/
 /outputs/
 /work/
+
+# Isolated local review build
+.next-preview/
+.next-review/

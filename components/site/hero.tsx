@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, Pause, Play } from "lucide-react";
+import { ArrowUpRight, Pause, Play } from "lucide-react";
+import { useScrollVideo } from "@/hooks/use-scroll-video";
 const scenes = [
 	{
 		label: "WHERE POSSIBILITY BEGINS",
@@ -54,9 +55,10 @@ export function Hero() {
 		layers = useRef<HTMLDivElement>(null),
 		bar = useRef<HTMLSpanElement>(null);
 	const [paused, setPaused] = useState(false),
-		[reduce, setReduce] = useState(false);
+		[reduce, setReduce] = useState(true);
+	const { seek: seekVideo, retry, pause: pauseVideo, needsActivation, failed } = useScrollVideo(video, reduce);
 	useEffect(() => {
-		const mq = matchMedia("(prefers-reduced-motion: reduce)");
+		const mq = matchMedia("(prefers-reduced-motion: reduce), (max-height: 500px)");
 		const change = () => setReduce(mq.matches);
 		change();
 		mq.addEventListener("change", change);
@@ -103,14 +105,7 @@ export function Hero() {
 			smooth += (target - smooth) * (1 - Math.exp(-8 * dt));
 			if (Math.abs(target - smooth) < 0.002) smooth = target;
 			draw(smooth);
-			if (
-				film.readyState >= 1 &&
-				!film.seeking &&
-				Number.isFinite(film.duration)
-			) {
-				const t = smooth * Math.max(0, film.duration - 0.05);
-				if (Math.abs(film.currentTime - t) > 0.025) film.currentTime = t;
-			}
+			seekVideo(smooth);
 			if (Math.abs(target - smooth) > 0.001) raf = requestAnimationFrame(tick);
 		};
 		const update = () => {
@@ -144,7 +139,7 @@ export function Hero() {
 			film.removeEventListener("loadedmetadata", update);
 			film.removeEventListener("seeked", seek);
 		};
-	}, [paused, reduce]);
+	}, [paused, reduce, seekVideo]);
 	return (
 		<section
 			ref={track}
@@ -155,14 +150,16 @@ export function Hero() {
 				<video
 					ref={video}
 					className="hero-film"
+                    style={failed ? { visibility: "hidden" } : undefined}
 					muted
 					playsInline
 					preload={reduce ? "none" : "auto"}
-					poster="/media/hero-poster.jpg"
-					src={reduce ? undefined : "/media/brand-film.mp4"}
+					poster="/media/clip5-poster.jpg"
+					src={reduce ? undefined : "/media/clip5.mp4"}
 					aria-hidden="true"
 				/>
-				<div className="hero-shade" />
+				{failed && <img className="hero-film" src="/media/clip5-poster.jpg" alt="" />}
+                <div className="hero-shade" />
 				<div ref={layers} className="hero-layers wrap">
 					{scenes.map((s, i) => (
 						<div
@@ -189,23 +186,20 @@ export function Hero() {
 					))}
 				</div>
 				<div className="hero-bottom wrap">
-					<a href="#discover" className="scroll-cue">
-						<ArrowDown size={18} />
-						{paused || reduce ? "삼광켐 알아보기" : "SCROLL TO EXPLORE"}
-					</a>
+
 					<div className="film-meta">
-						<span>INGREDIENTS. SCIENCE. POSSIBILITIES.</span>
+                        {!reduce && !paused && needsActivation && <button className="action light" type="button" onClick={retry}>영상 활성화 · 다시 시도</button>}
 						<button
 							className="icon-button"
 							aria-label={
 								reduce
-									? "모션 감소 설정 적용 중"
+									? "정적 보기 적용 중"
 									: paused
 										? "스크롤 모션 켜기"
 										: "스크롤 모션 끄기"
 							}
 							disabled={reduce}
-							onClick={() => setPaused(!paused)}
+							onClick={() => { if (paused) retry(); else pauseVideo(); setPaused(!paused); }}
 						>
 							{paused ? <Play size={17} /> : <Pause size={17} />}
 						</button>

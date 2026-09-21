@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+import { ProductCategoryRail } from "./product-category-rail";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { products, categories, manufacturers } from "@/lib/products";
 import { ProductCard } from "./product-card";
@@ -18,6 +20,23 @@ import {
 	PaginationLink,
 } from "@/components/ui/pagination";
 import { Search, X, LayoutGrid, List } from "lucide-react";
+function FilterChips({ label, name, values, current, onChange }: {
+ readonly label: string; readonly name: string; readonly values: readonly string[];
+ readonly current: string; readonly onChange: (value: string) => void;
+}) {
+ const [expanded, setExpanded] = useState(false);
+ const visible = expanded ? values : values.filter((value, index) => index < 8 || value === current);
+ return <fieldset className="ingredient-filter-group">
+  <legend>{label}</legend>
+  <div className="ingredient-filter-options" id={`options-${name}`}>
+   <button type="button" className="ingredient-chip" aria-pressed={!current} onClick={() => onChange("")}>전체</button>
+   {visible.map(value => <button type="button" className="ingredient-chip" key={value} aria-pressed={current === value} onClick={() => onChange(current === value ? "" : value)}>{value}</button>)}
+   {current && !values.includes(current) && <button type="button" className="ingredient-chip" aria-pressed="true" onClick={() => onChange("")}>{current} · 해제</button>}
+  </div>
+  {values.length > 8 && <button type="button" className="ingredient-filter-expand" aria-expanded={expanded} aria-controls={`options-${name}`} onClick={() => setExpanded(!expanded)}>{expanded ? "접기 −" : `모두 보기 (${values.length}) +`}</button>}
+ </fieldset>;
+}
+
 export function Catalog() {
 	const params = useSearchParams(),
 		router = useRouter(),
@@ -27,8 +46,8 @@ export function Catalog() {
 		sub = params.get("sub") ?? "",
 		manufacturer = params.get("manufacturer") ?? "",
 		sort = params.get("sort") ?? "name";
-	const listView = params.get("view") === "list";
-	const resetHref = listView ? "/products?view=list" : "/products";
+	const listView = params.get("view") !== "grid";
+	const resetHref = listView ? "/products" : "/products?view=grid";
 	const changeView = (view: string) => {
 		const next = new URLSearchParams(params.toString());
 		next.set("view", view);
@@ -36,7 +55,8 @@ export function Catalog() {
 	};
 	const update = (key: string, value: string) => {
 		const next = new URLSearchParams(params.toString());
-		value ? next.set(key, value) : next.delete(key);
+		if (value) next.set(key, value);
+		else next.delete(key);
 		next.delete("page");
 		if (key === "category") next.delete("sub");
 		router.push(`${path}?${next}`, { scroll: false });
@@ -60,46 +80,15 @@ export function Catalog() {
 				: a.name.localeCompare(b.name),
 		);
 	const pages = Math.ceil(result.length / 18),
-		page = Math.max(1, Math.min(Number(params.get("page")) || 1, pages || 1));
+		page = Math.max(1, Math.min(Math.floor(Number(params.get("page"))) || 1, pages || 1));
 	const subs = [
-		...new Set(
-			products.filter((p) => p.category === category).map((p) => p.subcategory),
-		),
-	].sort();
-	const filter = (
-		label: string,
-		key: string,
-		values: readonly string[],
-		current: string,
-	) => (
-		<div className="filter-field">
-			<label id={`label-${key}`} htmlFor={`filter-${key}`}>
-				{label}
-			</label>
-			<Select
-				value={current || "all"}
-				onValueChange={(v) => update(key, v === "all" ? "" : v)}
-			>
-				<SelectTrigger
-					id={`filter-${key}`}
-					className="filter-select"
-					aria-labelledby={`label-${key}`}
-				>
-					<SelectValue />
-				</SelectTrigger>
-				<SelectContent>
-					<SelectItem value="all">전체 {label}</SelectItem>
-					{values.map((v) => (
-						<SelectItem key={v} value={v}>
-							{v}
-						</SelectItem>
-					))}
-				</SelectContent>
-			</Select>
-		</div>
-	);
+		...new Set(products.filter((p) => !category || p.category === category).map((p) => p.subcategory)),
+	].filter(Boolean).sort();
 	return (
 		<>
+			<ProductCategoryRail selected={category} onSelect={(value) => update("category", value)} />
+			<section className="ingredient-catalog" aria-labelledby="catalog-heading">
+			<div className="ingredient-catalog-heading"><div><p className="eyebrow">FIND YOUR INGREDIENT</p><h2 id="catalog-heading">원료 찾아보기</h2></div><p>분류를 선택하고, 기능과 제조사로 좁혀보세요.</p></div>
 			<div className="catalog-controls">
 				<form
 					className="catalog-search"
@@ -123,10 +112,12 @@ export function Catalog() {
 					<button type="submit">검색</button>
 				</form>
 				<div className="filters">
-					{filter("대분류", "category", categories, category)}
-					{filter("소분류", "sub", subs, sub)}
-					{filter("제조사", "manufacturer", manufacturers, manufacturer)}
+					{/* The same URL-backed category selection is also available without scrolling the rail. */}
+					<FilterChips label="분류" name="category" values={categories} current={category} onChange={(value) => update("category", value)} />
+					<FilterChips key={category} label="기능 · 소분류" name="sub" values={subs} current={sub} onChange={(value) => update("sub", value)} />
+					<FilterChips label="제조사" name="manufacturer" values={manufacturers} current={manufacturer} onChange={(value) => update("manufacturer", value)} />
 					<button
+						type="button"
 						className="reset"
 						onClick={() => router.push(resetHref, { scroll: false })}
 					>
@@ -209,6 +200,7 @@ export function Catalog() {
 					</PaginationContent>
 				</Pagination>
 			)}
+			</section>
 			<CompareBar />
 		</>
 	);

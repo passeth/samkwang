@@ -1,0 +1,28 @@
+/* Research diagrams: semantic lists retain their hierarchy on small screens. */
+.rd-direction,.rd-organization{--rd-line:#b9d5ce;--rd-ink:#125b4d;--rd-soft:#f2f7f4}
+.rd-model{text-align:center;padding:32px 20px 0}
+.rd-model-label{font-size:11px;letter-spacing:.18em;color:#577d72;margin:0 0 12px}
+.rd-model h3{font-size:clamp(23px,3vw,36px);font-weight:500;letter-spacing:-.045em;margin:0;color:var(--rd-ink)}
+.rd-model-bridge{display:block;position:relative;width:max-content;margin:32px auto 0;padding:10px 28px;border:1px solid var(--rd-line);border-radius:30px;background:white;font-size:14px;color:var(--rd-ink)}
+.rd-model-bridge:before{content:"";position:absolute;height:32px;bottom:100%;left:50%;border-left:1px solid var(--rd-line)}
+.rd-pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;list-style:none;padding:36px 0 0;margin:0;position:relative}
+.rd-pillars:before{content:"";position:absolute;left:50%;top:0;height:18px;border-left:1px solid var(--rd-line)}
+.rd-pillars>li{position:relative;border-top:2px solid var(--rd-ink);background:var(--rd-soft);padding:28px;min-width:0}
+.rd-pillars>li:before{content:"";position:absolute;top:-20px;height:18px;left:50%;border-left:1px solid var(--rd-line)}
+.rd-pillars:after{content:"";position:absolute;top:18px;left:calc(16.666% - 8px);right:calc(16.666% - 8px);border-top:1px solid var(--rd-line)}
+.rd-index{display:block;font-size:12px;letter-spacing:.1em;color:#5e8278;margin-bottom:24px}
+.rd-pillars h3,.rd-org-branches h3{font-size:clamp(19px,1.8vw,25px);font-weight:500;letter-spacing:-.045em;line-height:1.45;margin:0 0 20px;color:#183f35}
+.rd-pillars ul{padding-left:18px;margin:0;color:#52675e;font-size:15px;line-height:1.8;list-style:disc}
+.rd-pillars ul li+li{margin-top:10px}
+.rd-organization{padding-top:12px}
+.rd-org-root{position:relative;width:min(100%,300px);margin:0 auto 44px;padding:24px;text-align:center;background:var(--rd-ink);color:#fff;border-radius:3px}
+.rd-org-root span{font-size:10px;letter-spacing:.18em;color:#c4dbd3}
+.rd-org-root h3{font-size:28px;font-weight:500;letter-spacing:-.04em;margin:8px 0 0}
+.rd-org-root:after{content:"";position:absolute;top:100%;left:50%;height:23px;border-left:1px solid var(--rd-line)}
+.rd-org-branches{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;padding:0;margin:0;list-style:none;position:relative}
+.rd-org-branches:before{content:"";position:absolute;top:-22px;left:calc(12.5% - 7.5px);right:calc(12.5% - 7.5px);border-top:1px solid var(--rd-line)}
+.rd-org-branches>li{position:relative;border:1px solid #dce7e1;background:linear-gradient(145deg,#f2f7f4,#fff);padding:26px 22px;min-width:0}
+.rd-org-branches>li:before{content:"";position:absolute;left:50%;bottom:100%;height:22px;border-left:1px solid var(--rd-line)}
+.rd-org-branches p{margin:0;color:#586b61;font-size:15px;line-height:1.85;word-break:keep-all;overflow-wrap:anywhere}
+@media(max-width:900px){.rd-org-branches{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.rd-org-branches:before{left:calc(25% - 5px);right:calc(25% - 5px)}.rd-pillars{gap:14px}.rd-pillars>li{padding:22px 18px}.rd-pillars:after{left:calc(16.666% - 5px);right:calc(16.666% - 5px)}}
+@media(max-width:600px){.rd-model{padding:20px 0 0}.rd-pillars{grid-template-columns:1fr;padding:26px 0 0 16px;gap:16px}.rd-pillars:after{top:0;bottom:0;left:0;right:auto;border-top:0;border-left:1px solid var(--rd-line)}.rd-pillars:before{display:none}.rd-pillars>li:before{top:28px;left:-17px;width:16px;height:0;border-left:0;border-top:1px solid var(--rd-line)}.rd-index{margin-bottom:12px}.rd-pillars h3,.rd-org-branches h3{margin-bottom:12px}.rd-org-root{margin-left:0;margin-bottom:24px;width:100%}.rd-org-root:after{left:0;height:24px}.rd-org-branches{grid-template-columns:1fr;padding-left:16px;gap:14px}.rd-org-branches:before{left:0;top:-1px;bottom:0;right:auto;border-top:0;border-left:1px solid var(--rd-line)}.rd-org-branches>li:before{left:-17px;top:30px;width:16px;height:0;border-left:0;border-top:1px solid var(--rd-line)}.rd-org-branches>li{padding:22px}.rd-org-branches p{font-size:14px}}

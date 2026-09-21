@@ -8,10 +8,10 @@ export function ProductList({
 	readonly products: readonly Product[];
 }) {
 	return (
-		<table className="product-list">
+		<table className="product-list" role="table">
 			<caption className="sr-only">제품 검색 결과</caption>
-			<thead>
-				<tr>
+			<thead role="rowgroup">
+				<tr role="row">
 					<th scope="col">제품명 / INCI</th>
 					<th scope="col">제조사</th>
 					<th scope="col">분류</th>
@@ -19,28 +19,24 @@ export function ProductList({
 					<th scope="col">관심 / 비교</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody role="rowgroup">
 				{products.map((p) => (
-					<tr key={p.id}>
-						<th scope="row">
+					<tr key={p.id} role="row">
+						<th scope="row" role="rowheader">
 							<a href={`/products/${p.id}`}>
 								{p.name}
 								<ArrowUpRight size={18} aria-hidden="true" />
 							</a>
-							<p className="inci">{p.inci}</p>
+							<p className="inci"><span className="product-inci-label">INCI</span>{p.inci}</p>
 						</th>
-						<td data-label="제조사">{p.manufacturer}</td>
-						<td data-label="분류">
-							{p.category}
-							<br />
-							{p.subcategory}
-						</td>
-						<td data-label="포장 단위">
+						<td role="cell" data-label="제조사"><span>{p.manufacturer}</span></td>
+						<td role="cell" data-label="분류"><span>{p.category}{p.subcategory && <span className="product-subcategory">{p.subcategory}</span>}</span></td>
+						<td role="cell" data-label="포장 단위"><span>
 							{p.packing_unit && p.packing_unit !== "-"
 								? p.packing_unit
-								: "문의"}
+								: "문의"}</span>
 						</td>
-						<td>
+						<td role="cell">
 							<ProductActions id={p.id} />
 						</td>
 					</tr>

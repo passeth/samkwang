@@ -1,20 +1,16 @@
+import { HomeMotion } from "@/components/site/home-motion";
 import { Hero } from "@/components/site/hero";
 import {
 	ImageBanner,
-	LogoRail,
 	MediaSplit,
-	PhotoMosaic,
 	StatStrip,
-	StepMedia,
 } from "@/components/site/rich-sections";
-import { customers } from "@/data/company";
-import { photos } from "@/data/research";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 export default function Home() {
 	return (
-		<main id="main">
+		<main id="main" className="home-page">
+			<HomeMotion />
 			<Hero />
-			<LogoRail title="원료와 제품을 함께 만드는 파트너" items={customers.slice(0, 7)} />
 			<section className="section wrap intro" id="discover">
 				<p className="eyebrow">FROM INGREDIENT TO POSSIBILITY</p>
 				<div>
@@ -104,48 +100,12 @@ export default function Home() {
 				body="성분을 어떻게 담을지, 제형에 어떻게 적용할지. 캡슐화·가용화·안정화·정제 기술로 원료 다음의 질문을 이어갑니다."
 				href="/technology"
 				cta="삼광켐의 기술"
-				video
-				videoSrc="/media/clip2.mp4"
-				image="/media/clip2-poster.jpg"
-				alt="시험관에 담긴 오일 소재"
+				image="/media/editorial/lab-editorial.jpg"
+				alt="연구 장비와 정돈된 실험대"
 			/>
-			<StepMedia
-				eyebrow="HOW WE WORK"
-				title={
-					<>
-						원료를 찾고,
-						기술을 보고,
-						다음 제품을 나눕니다.
-					</>
-				}
-				steps={[
-					{
-						index: "01",
-						name: "원료 탐색",
-						body: "분류·제조사·INCI로 필요한 원료를 찾습니다.",
-						image: "/media/technology/gceraplex-pack.jpg",
-						alt: "Gceraplex 제품 용기",
-					},
-					{
-						index: "02",
-						name: "기술 검토",
-						body: "캡슐화·가용화·안정화·정제와 제형 적용을 살펴봅니다.",
-						image: "/media/technology/gceraplex-structure.jpg",
-						alt: "Gceraplex 구조 도해",
-					},
-					{
-						index: "03",
-						name: "개발 상담",
-						body: "샘플·견적·임가공 조건을 담당자와 확인합니다.",
-						image: "/media/research/lab-02.jpg",
-						alt: "연구소 분석 공간",
-					},
-				]}
-			/>
-			<PhotoMosaic photos={photos} />
 			<ImageBanner
-				src="/media/hero.jpg"
-				alt="유리 용기와 액체 소재"
+				src="/media/editorial/consultation-banner.jpg"
+				alt="햇살이 드는 연구 작업대 위 원료 접시와 제형 노트를 살펴보는 손"
 				eyebrow="NEXT FORMULA"
 				title={
 					<>

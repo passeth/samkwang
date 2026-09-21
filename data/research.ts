@@ -27,7 +27,18 @@ export const patent = {
 		"이중층을 갖는 사이즈-가변성 비쥬얼 캡슐의 제조방법과 이로부터 제조된 비쥬얼 캡슐을 포함하는 화장료 조성물",
 } as const;
 
-export const organization = ["기업부설 연구소", "소장", "연구원"] as const;
+export const developmentDirections = [
+ { title: "고부가 가치 창출을 위한 기술력", items: ["난용성 소재 수용화 및 안정화를 통한 소재 개발", "천연 신소재 개발"] },
+ { title: "자체 데이터 확립", items: ["자체 분석 기술력 확보", "자체 간이 효능평가 시스템 구축"] },
+ { title: "기술 및 업무 경쟁력에 따른 부가효과", items: ["제형 응용 및 개발에 의한 차별화", "지적 재산권 확보"] },
+] as const;
+
+export const organization = [
+ { title: "신 원료 개발", description: "가용화 및 안정화 기술을 이용한 신 원료 및 천연소재 원료의 개발" },
+ { title: "제형화 연구", description: "신 원료의 화장품 제형으로의 적용 및 응용" },
+ { title: "연구 기획/학술 연구", description: "연구기획 및 연구 활동에 필요한 각종 자료 수집 및 활용" },
+ { title: "정제기술연구", description: "유효성 높은 탈취, 탈색 등의 정제과정을 통한 순도 높은 제품 개발" },
+] as const;
 
 export const photos = [
 	{

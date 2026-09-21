@@ -89,17 +89,22 @@
 .product-list thead th:last-child { width: 160px; }
 .product-list th a { display: flex; justify-content: space-between; gap: 12px; font-size: 18px; font-weight: 500; }
 .product-list th a svg { flex-shrink: 0; }
-.product-list .inci { margin: 12px 0 0; font-weight: 400; }
+.product-list .inci { margin: 8px 0 0; font-weight: 400; }
+.product-inci-label { display: block; font-size: 10px; letter-spacing: .1em; margin-bottom: 2px; }
+.product-subcategory { display: block; color: var(--muted-foreground); margin-top: 2px; }
+.product-list .product-actions button { min-width: 44px; justify-content: center; }
 .product-list tbody tr:hover { background: var(--background); }
 @media (max-width: 767px) {
 	.result-toolbar > p { flex-basis: 100%; }
 	.product-list, .product-list tbody { display: block; }
 	.product-list thead { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
-	.product-list tr { display: block; border: 1px solid var(--border); padding: 24px; margin-bottom: 16px; }
-	.product-list th, .product-list td { display: block; width: 100%; padding: 8px 0; border: 0; }
-	.product-list td[data-label] { display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 12px; }
+	.product-list tbody tr { display: block; border-bottom: 1px solid var(--border); padding: 18px 16px; margin: 0; }
+	.product-list th, .product-list td { display: block; width: 100%; padding: 5px 0; border: 0; }
+	.product-list tbody th { padding: 0 0 12px; }
+	.product-list th a { min-height: 44px; align-items: center; font-size: 18px; line-height: 1.4; }
+	.product-list td[data-label] { display: grid; grid-template-columns: 64px minmax(0,1fr); gap: 10px; }
 	.product-list td[data-label]::before { content: attr(data-label); color: var(--muted-foreground); }
-	.product-list td:last-child { border-top: 1px solid var(--border); margin-top: 12px; padding-top: 16px; }
+	.product-list td:last-child { border-top: 1px solid var(--border); margin-top: 10px; padding-top: 12px; }
 }
 .sort-select {
 	min-height: 44px;
