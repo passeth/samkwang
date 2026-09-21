@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
 import { mediaDiagnostic } from "@/lib/media-diagnostics";
+import { STATIC_SCROLL_VIDEO_QUERY } from "@/lib/video-motion-policy";
 
 /** Preference disables the owner; user pause stays inside it so resume can play in the click. */
 export function useScrollVideo(ref: RefObject<HTMLVideoElement | null>, disabled: boolean, start = 0) {
@@ -19,7 +20,7 @@ export function useScrollVideo(ref: RefObject<HTMLVideoElement | null>, disabled
   if (!video) return;
   let disposed = false, priming = false, suspended = false, sequence = 0;
   let timer: ReturnType<typeof setTimeout> | undefined;
-  const preference = matchMedia("(prefers-reduced-motion: reduce)");
+  const preference = matchMedia(STATIC_SCROLL_VIDEO_QUERY);
   const allowed = () => !disposed && !disabled && !preference.matches && !userPaused.current && !suspended && !document.hidden;
   const log = (event: string, error?: unknown) => mediaDiagnostic(video, event, sequence, error);
   const cancel = () => { sequence++; clearTimeout(timer); priming = false; video.pause(); };
