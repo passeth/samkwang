@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { technologies } from "@/lib/technology";
 import "./technology-journey.css";
 import { useScrollVideo } from "@/hooks/use-scroll-video";
+import { STATIC_SCROLL_VIDEO_QUERY } from "@/lib/video-motion-policy";
 
 // Retain the overview's original editorial copy; detail routes come from the source data.
 const stories = [
@@ -29,7 +30,7 @@ export function TechnologyJourney() {
  const { seek: seekVideo, retry, pause: pauseVideo, needsActivation, failed } = useScrollVideo(film, !cinematic, 1);
  useEffect(() => {
   // Short landscape/zoomed viewports use the same readable, complete fallback.
-  const media = matchMedia("(prefers-reduced-motion: reduce), (max-height: 500px)");
+  const media = matchMedia(STATIC_SCROLL_VIDEO_QUERY);
   const change = () => setCinematic(!media.matches);
   change();
   media.addEventListener("change", change);

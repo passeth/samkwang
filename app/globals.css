@@ -607,7 +607,7 @@ a svg {
 		animation: none !important;
 		transition: none !important;
 	}
-	.hero-track {
+	.hero-track.static-hero {
 		height: 100svh;
 	}
 }
@@ -813,7 +813,7 @@ body p {
  .home-page .stat-strip { padding-block: 36px; }
 }
 @media (prefers-reduced-motion: reduce) {
- .hero-track { height: auto; }
+ .hero-track.static-hero { height: auto; }
  .home-page .reveal-pending { opacity: 1; translate: none; }
 }
 

@@ -1,4 +1,5 @@
 "use client";
+import { STATIC_SCROLL_VIDEO_QUERY } from "@/lib/video-motion-policy";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Pause, Play } from "lucide-react";
 import { useScrollVideo } from "@/hooks/use-scroll-video";
@@ -58,7 +59,7 @@ export function Hero() {
 		[reduce, setReduce] = useState(true);
 	const { seek: seekVideo, retry, pause: pauseVideo, needsActivation, failed } = useScrollVideo(video, reduce);
 	useEffect(() => {
-		const mq = matchMedia("(prefers-reduced-motion: reduce), (max-height: 500px)");
+		const mq = matchMedia(STATIC_SCROLL_VIDEO_QUERY);
 		const change = () => setReduce(mq.matches);
 		change();
 		mq.addEventListener("change", change);

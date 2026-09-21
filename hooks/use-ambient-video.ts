@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
 import { mediaDiagnostic } from "@/lib/media-diagnostics";
+import { REDUCED_VIDEO_QUERY } from "@/lib/video-motion-policy";
 
 /** One automatic attempt; recovery is an explicit local button, never a global gesture. */
 export function useAmbientVideo(ref: RefObject<HTMLVideoElement | null>, disabled = false) {
@@ -15,7 +16,7 @@ export function useAmbientVideo(ref: RefObject<HTMLVideoElement | null>, disable
  useEffect(() => {
   const video = ref.current;
   if (!video) return;
-  const preference = matchMedia("(prefers-reduced-motion: reduce)");
+  const preference = matchMedia(REDUCED_VIDEO_QUERY);
   let visible = false, disposed = false, pending = false, started = false, suspended = false, attempted = false, sequence = 0;
   let timer: ReturnType<typeof setTimeout> | undefined;
   let frame: number | undefined;
